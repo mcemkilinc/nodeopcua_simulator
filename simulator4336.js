@@ -37,6 +37,7 @@ let St130CycleTime=30;
 let ProcessStep="NotStarted";
 
 let simControl=0;
+let waitTime=3000;
 let updatedJigID="";
 
 function resetSimulator(){
@@ -105,7 +106,7 @@ function construct_my_address_space(server) {
         St110WP1JigID=updatedJigID;
         setTimeout(function () {
             runWP1(++a);
-        },5000);
+        },waitTime);
     }
     function runWP2(a) {
         if (a > 33) return;
@@ -115,7 +116,7 @@ function construct_my_address_space(server) {
         St110WP2JigID=updatedJigID;
         setTimeout(function () {
             runWP2(a+28);
-        },5000);
+        },waitTime);
     }
     function runWP3(a) {
         if (a > 132) return;
@@ -125,7 +126,7 @@ function construct_my_address_space(server) {
         St110WP3JigID=updatedJigID;
         setTimeout(function () {
             runWP3(a+64);
-        },5000);
+        },waitTime);
     }
     function runWP4(a) {
         if (a > 2) return;
@@ -135,7 +136,7 @@ function construct_my_address_space(server) {
         St120WP4JigID=updatedJigID;
         setTimeout(function () {
             runWP4(++a);
-        },5000);
+        },waitTime);
     }
     function runWP5(a) {
         if (a > 8) return;
@@ -144,8 +145,8 @@ function construct_my_address_space(server) {
         St120WP4JigID="";
         St120WP5JigID=updatedJigID;
         setTimeout(function () {
-            runWP6(a+4);
-        },5000);
+            runWP5(a+4);
+        },waitTime);
     }
     function runWP6(a) {
         if (a > 32) return;
@@ -155,7 +156,7 @@ function construct_my_address_space(server) {
         St120WP6JigID=updatedJigID;
         setTimeout(function () {
             runWP6(a+16);
-        },5000);
+        },waitTime);
     }
     function runWP7(a) {
         if (a > 128) return;
@@ -165,7 +166,7 @@ function construct_my_address_space(server) {
         St120WP7JigID=updatedJigID;
         setTimeout(function () {
             runWP7(a+64);
-        },5000);
+        },waitTime);
     }
     function runTestBench(a) {
         if (a < 0) {
@@ -177,7 +178,7 @@ function construct_my_address_space(server) {
         setTimeout(function () {
             runTestBench(--a);
             St130PartResult=1;
-        },5000);
+        },waitTime);
     }
 
             // add a variable named MyVariable1 to the newly created folder "MyDevice"
@@ -275,6 +276,14 @@ namespace.addVariable({componentOf: folderNode,browseName:"simControl",nodeId: `
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: simControl });},
     set: function (variant) {
         simControl = parseInt(variant.value);
+        resetSimulator();
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"waitTime",nodeId: `s=waitTime`,dataType: "Int32",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: waitTime });},
+    set: function (variant) {
+        waitTime = parseInt(variant.value);
         resetSimulator();
         return opcua.StatusCodes.Good;
     }
