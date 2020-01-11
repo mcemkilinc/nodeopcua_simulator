@@ -33,7 +33,6 @@ let St130ProcessStatus=0;
 let St130PartResult=0;
 let LD90JigStatus=1;
 let LD90JigOrder=0;
-let St130CycleTime=30;
 let ProcessStep="NotStarted";
 
 let updatedJigID="";
@@ -58,7 +57,6 @@ function resetSimulator(){
     St130PartResult=0;
     LD90JigStatus=1;
     LD90JigOrder=0;
-    let St130CycleTime=30;
     ProcessStep="NotStarted";
 
     updatedJigID="";
@@ -209,9 +207,9 @@ set: function (variant) {
 }
 }});
 namespace.addVariable({componentOf: folderNode,browseName:"St110MachineState",nodeId: `s=St110MachineState`,dataType: "Int32",value:{
-    get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St110MachineState });},
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St110MachineState });},
     set: function (variant) {
-        St410ProcessStatus = parseFloat(variant.value);
+        St110MachineState = parseFloat(variant.value);
         return opcua.StatusCodes.Good;
     }
 }});
@@ -226,14 +224,33 @@ namespace.addVariable({componentOf: folderNode,browseName:"St110ProcessStatus",n
         return opcua.StatusCodes.Good;
     }
 }});
-namespace.addVariable({componentOf: folderNode,browseName:"St110WP1JigID",nodeId: `s=St110WP1JigID`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St110WP1JigID });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"St110WP2JigID",nodeId: `s=St110WP2JigID`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St110WP2JigID });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"St110WP3JigID",nodeId: `s=St110WP3JigID`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St110WP3JigID });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"St110WorkOrderActive",nodeId: `s=St110WorkOrderActive`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St110WorkOrderActive });},
-set: function (variant) {
-    St110WorkOrderActive = variant.value;
-    return opcua.StatusCodes.Good;
-}
+namespace.addVariable({componentOf: folderNode,browseName:"St110WP1JigID",nodeId: `s=St110WP1JigID`,dataType: "String",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St110WP1JigID });},
+    set: function (variant) {
+        St110WP1JigID = variant.value;
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"St110WP2JigID",nodeId: `s=St110WP2JigID`,dataType: "String",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St110WP2JigID });},
+    set: function (variant) {
+        St110WP2JigID = variant.value;
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"St110WP3JigID",nodeId: `s=St110WP3JigID`,dataType: "String",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St110WP3JigID });},
+    set: function (variant) {
+        St110WP3JigID = variant.value;
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"St110WorkOrderActive",nodeId: `s=St110WorkOrderActive`,dataType: "Boolean",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St110WorkOrderActive });},
+    set: function (variant) {
+        St110WorkOrderActive = variant.value;
+        return opcua.StatusCodes.Good;
+    }
 }});
 namespace.addVariable({componentOf: folderNode,browseName:"St110WorkOrder",nodeId: `s=St110WorkOrder`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St110WorkOrder });},
 set: function (variant) {
@@ -241,7 +258,13 @@ set: function (variant) {
     return opcua.StatusCodes.Good;
 }
 }});
-namespace.addVariable({componentOf: folderNode,browseName:"St110CycleTime",nodeId: `s=St110CycleTime`,dataType: "Float",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St110CycleTime });}}});
+namespace.addVariable({componentOf: folderNode,browseName:"St110CycleTime",nodeId: `s=St110CycleTime`,dataType: "Float",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St110CycleTime });},
+    set: function (variant) {
+        St110CycleTime = parseFloat(variant.value);
+        return opcua.StatusCodes.Good;
+    }
+}});
 namespace.addVariable({componentOf: folderNode,browseName:"St120ProcessStatus",nodeId: `s=St120ProcessStatus`,dataType: "Byte",value:{
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St120ProcessStatus });},
     set: function (variant) {
@@ -253,14 +276,55 @@ namespace.addVariable({componentOf: folderNode,browseName:"St120ProcessStatus",n
         return opcua.StatusCodes.Good;
     }
 }});
-namespace.addVariable({componentOf: folderNode,browseName:"St120WP4JigID",nodeId: `s=St120WP4JigID`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St120WP4JigID });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"St120WP5JigID",nodeId: `s=St120WP5JigID`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St120WP5JigID });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"St120WP6JigID",nodeId: `s=St120WP6JigID`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St120WP6JigID });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"St120WP7JigID",nodeId: `s=St120WP7JigID`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St120WP7JigID });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"St130ProcessStatus",nodeId: `s=St130ProcessStatus`,dataType: "Byte",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St130ProcessStatus });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"St130PartResult",nodeId: `s=St130PartResult`,dataType: "Byte",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St130PartResult });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"St130CycleTime",nodeId: `s=St130CycleTime`,dataType: "Float",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Float, value: St130CycleTime });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"LD90JigStatus",nodeId: `s=LD90JigStatus`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: LD90JigStatus });}}});
+namespace.addVariable({componentOf: folderNode,browseName:"St120WP4JigID",nodeId: `s=St120WP4JigID`,dataType: "String",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St120WP4JigID });},
+    set: function (variant) {
+        St120WP4JigID = variant.value;
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"St120WP5JigID",nodeId: `s=St120WP5JigID`,dataType: "String",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St120WP5JigID });},
+    set: function (variant) {
+        St120WP5JigID = variant.value;
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"St120WP6JigID",nodeId: `s=St120WP6JigID`,dataType: "String",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St120WP6JigID });},
+    set: function (variant) {
+        St120WP6JigID = variant.value;
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"St120WP7JigID",nodeId: `s=St120WP7JigID`,dataType: "String",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St120WP7JigID });},
+    set: function (variant) {
+        St120WP7JigID = variant.value;
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"St130ProcessStatus",nodeId: `s=St130ProcessStatus`,dataType: "Byte",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St130ProcessStatus });},
+    set: function (variant) {
+        St130ProcessStatus = parseFloat(variant.value);
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"St130PartResult",nodeId: `s=St130PartResult`,dataType: "Byte",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St130PartResult });},
+    set: function (variant) {
+        St130PartResult = parseFloat(variant.value);
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"LD90JigStatus",nodeId: `s=LD90JigStatus`,dataType: "Int32",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: LD90JigStatus });},
+    set: function (variant) {
+        LD90JigStatus = parseFloat(variant.value);
+        return opcua.StatusCodes.Good;
+    }
+}});
 namespace.addVariable({componentOf: folderNode,browseName:"LD90JigOrder",nodeId: `s=LD90JigOrder`,dataType: "Int32",value:{
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: LD90JigOrder });},
     set: function (variant) {
@@ -269,7 +333,13 @@ namespace.addVariable({componentOf: folderNode,browseName:"LD90JigOrder",nodeId:
         return opcua.StatusCodes.Good;
     }
 }});
-namespace.addVariable({componentOf: folderNode,browseName:"ProcessStep",nodeId: `s=PRocessStep`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: ProcessStep });}}});
+namespace.addVariable({componentOf: folderNode,browseName:"ProcessStep",nodeId: `s=PRocessStep`,dataType: "String",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: ProcessStep });},
+    set: function (variant) {
+        ProcessStep = parseFloat(variant.value);
+        return opcua.StatusCodes.Good;
+    }
+}});
 
 }
 function extract_value(dataType) {
@@ -282,7 +352,7 @@ function extract_value(dataType) {
     try {
       
       const server = new opcua.OPCUAServer({
-         port: 4335, // the port of the listening socket of the servery
+         port: 4334, // the port of the listening socket of the servery
          buildInfo: {
            productName: "WeatherStation",
            buildNumber: "7658",
