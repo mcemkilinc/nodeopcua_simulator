@@ -14,9 +14,9 @@ function unixEpoqToDate(unixDate) {
 
 const opcua = require("node-opcua");
 
-let St410ProcessStatus=2;
+let St410ProcessStatus=0;
 let St410KittingJigID="";
-let St110MachineState=4;
+let St110MachineState=0;
 let St110ProcessStatus=0;
 let St110WP1JigID="";
 let St110WP2JigID="";
@@ -33,6 +33,7 @@ let St130ProcessStatus=0;
 let St130PartResult=0;
 let LD90JigStatus=1;
 let LD90JigOrder=0;
+let St130CycleTime=30;
 let ProcessStep="NotStarted";
 
 let updatedJigID="";
@@ -57,6 +58,7 @@ function resetSimulator(){
     St130PartResult=0;
     LD90JigStatus=1;
     LD90JigOrder=0;
+    St130CycleTime=30;
     ProcessStep="NotStarted";
 
     updatedJigID="";
@@ -245,12 +247,11 @@ namespace.addVariable({componentOf: folderNode,browseName:"St110WP3JigID",nodeId
         return opcua.StatusCodes.Good;
     }
 }});
-namespace.addVariable({componentOf: folderNode,browseName:"St110WorkOrderActive",nodeId: `s=St110WorkOrderActive`,dataType: "Boolean",value:{
-    get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St110WorkOrderActive });},
-    set: function (variant) {
-        St110WorkOrderActive = variant.value;
-        return opcua.StatusCodes.Good;
-    }
+namespace.addVariable({componentOf: folderNode,browseName:"St110WorkOrderActive",nodeId: `s=St110WorkOrderActive`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St110WorkOrderActive });},
+set: function (variant) {
+    St110WorkOrderActive = variant.value;
+    return opcua.StatusCodes.Good;
+}
 }});
 namespace.addVariable({componentOf: folderNode,browseName:"St110WorkOrder",nodeId: `s=St110WorkOrder`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St110WorkOrder });},
 set: function (variant) {
@@ -258,13 +259,7 @@ set: function (variant) {
     return opcua.StatusCodes.Good;
 }
 }});
-namespace.addVariable({componentOf: folderNode,browseName:"St110CycleTime",nodeId: `s=St110CycleTime`,dataType: "Float",value:{
-    get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St110CycleTime });},
-    set: function (variant) {
-        St110CycleTime = parseFloat(variant.value);
-        return opcua.StatusCodes.Good;
-    }
-}});
+namespace.addVariable({componentOf: folderNode,browseName:"St110CycleTime",nodeId: `s=St110CycleTime`,dataType: "Float",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St110CycleTime });}}});
 namespace.addVariable({componentOf: folderNode,browseName:"St120ProcessStatus",nodeId: `s=St120ProcessStatus`,dataType: "Byte",value:{
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St120ProcessStatus });},
     set: function (variant) {
@@ -318,6 +313,7 @@ namespace.addVariable({componentOf: folderNode,browseName:"St130PartResult",node
         return opcua.StatusCodes.Good;
     }
 }});
+namespace.addVariable({componentOf: folderNode,browseName:"St130CycleTime",nodeId: `s=St130CycleTime`,dataType: "Float",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Float, value: St130CycleTime });}}});
 namespace.addVariable({componentOf: folderNode,browseName:"LD90JigStatus",nodeId: `s=LD90JigStatus`,dataType: "Int32",value:{
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: LD90JigStatus });},
     set: function (variant) {
@@ -353,6 +349,8 @@ function extract_value(dataType) {
       
       const server = new opcua.OPCUAServer({
          port: 4334, // the port of the listening socket of the servery
+         maxAllowedSessionNumber: 100,
+         maxConnectionsPerEndpoint: 100,
          buildInfo: {
            productName: "WeatherStation",
            buildNumber: "7658",

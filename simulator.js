@@ -36,6 +36,7 @@ let LD90JigOrder=0;
 let St130CycleTime=30;
 let ProcessStep="NotStarted";
 
+let simControl=0;
 let updatedJigID="";
 
 function resetSimulator(){
@@ -58,9 +59,10 @@ function resetSimulator(){
     St130PartResult=0;
     LD90JigStatus=1;
     LD90JigOrder=0;
-    let St130CycleTime=30;
+    St130CycleTime=30;
     ProcessStep="NotStarted";
 
+    simControl=0;
     updatedJigID="";
 
 }
@@ -103,27 +105,27 @@ function construct_my_address_space(server) {
         St110WP1JigID=updatedJigID;
         setTimeout(function () {
             runWP1(++a);
-        },3000);
+        },5000);
     }
     function runWP2(a) {
-        if (a > 18) return;
+        if (a > 33) return;
         St110ProcessStatus=a;
         ProcessStep="WP2";
         St110WP1JigID="";
         St110WP2JigID=updatedJigID;
         setTimeout(function () {
-            runWP2(a+12);
-        },3000);
+            runWP2(a+28);
+        },5000);
     }
     function runWP3(a) {
-        if (a > 129) return;
-        St110ProcessStatus=64;
+        if (a > 132) return;
+        St110ProcessStatus=a;
         ProcessStep="WP3";
         St110WP2JigID="";
         St110WP3JigID=updatedJigID;
         setTimeout(function () {
             runWP3(a+64);
-        },3000);
+        },5000);
     }
     function runWP4(a) {
         if (a > 2) return;
@@ -133,7 +135,7 @@ function construct_my_address_space(server) {
         St120WP4JigID=updatedJigID;
         setTimeout(function () {
             runWP4(++a);
-        },3000);
+        },5000);
     }
     function runWP5(a) {
         if (a > 8) return;
@@ -143,7 +145,7 @@ function construct_my_address_space(server) {
         St120WP5JigID=updatedJigID;
         setTimeout(function () {
             runWP6(a+4);
-        },3000);
+        },5000);
     }
     function runWP6(a) {
         if (a > 32) return;
@@ -153,7 +155,7 @@ function construct_my_address_space(server) {
         St120WP6JigID=updatedJigID;
         setTimeout(function () {
             runWP6(a+16);
-        },3000);
+        },5000);
     }
     function runWP7(a) {
         if (a > 128) return;
@@ -163,7 +165,7 @@ function construct_my_address_space(server) {
         St120WP7JigID=updatedJigID;
         setTimeout(function () {
             runWP7(a+64);
-        },3000);
+        },5000);
     }
     function runTestBench(a) {
         if (a < 0) {
@@ -266,6 +268,14 @@ namespace.addVariable({componentOf: folderNode,browseName:"LD90JigOrder",nodeId:
     set: function (variant) {
         LD90JigOrder = parseFloat(variant.value);
         runLD90Jig(1);
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"simControl",nodeId: `s=simControl`,dataType: "Int32",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: simControl });},
+    set: function (variant) {
+        simControl = parseInt(variant.value);
+        resetSimulator();
         return opcua.StatusCodes.Good;
     }
 }});
