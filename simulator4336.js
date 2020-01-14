@@ -37,7 +37,7 @@ let St130CycleTime=30;
 let ProcessStep="NotStarted";
 
 let simControl=0;
-let waitTime=3000;
+let waitTime=5000;
 let updatedJigID="";
 
 function resetSimulator(){
@@ -301,7 +301,7 @@ function extract_value(dataType) {
     try {
       
       const server = new opcua.OPCUAServer({
-         port: 4335, // the port of the listening socket of the servery
+         port: 4336, // the port of the listening socket of the servery
          buildInfo: {
            productName: "WeatherStation",
            buildNumber: "7658",

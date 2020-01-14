@@ -37,7 +37,7 @@ let St130CycleTime=30;
 let ProcessStep="NotStarted";
 
 let simControl=0;
-let waitTime=3000;
+let waitTime=5000;
 let updatedJigID="";
 
 function resetSimulator(){
