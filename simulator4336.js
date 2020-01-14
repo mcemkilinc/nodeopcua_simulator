@@ -36,6 +36,7 @@ let LD90JigOrder=0;
 let St130CycleTime=30;
 let ProcessStep="NotStarted";
 
+let startTest=0;
 let simControl=0;
 let waitTime=5000;
 let updatedJigID="";
@@ -65,7 +66,7 @@ function resetSimulator(){
 
     simControl=0;
     updatedJigID="";
-
+    startTest=0;
 }
 
 function construct_my_address_space(server) {
@@ -252,7 +253,6 @@ namespace.addVariable({componentOf: folderNode,browseName:"St120ProcessStatus",n
         if(St120ProcessStatus==0&&ProcessStep=="WP4") runWP5(4)
         if(St120ProcessStatus==0&&ProcessStep=="WP5") runWP6(16)
         if(St120ProcessStatus==0&&ProcessStep=="WP6") runWP7(64)
-        if(St120ProcessStatus==0&&ProcessStep=="WP7") runTestBench(1)
         return opcua.StatusCodes.Good;
     }
 }});
@@ -285,6 +285,14 @@ namespace.addVariable({componentOf: folderNode,browseName:"waitTime",nodeId: `s=
     set: function (variant) {
         waitTime = parseInt(variant.value);
         resetSimulator();
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"startTest",nodeId: `s=startTest`,dataType: "Int32",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: startTest });},
+    set: function (variant) {
+        startTest = parseInt(variant.value);
+        if(startTest==1&&ProcessStep=="WP7") runTestBench(1);
         return opcua.StatusCodes.Good;
     }
 }});
