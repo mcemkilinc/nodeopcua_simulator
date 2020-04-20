@@ -744,7 +744,7 @@ function extract_value(dataType) {
     try {
       
       const server = new opcua.OPCUAServer({
-         port: 4336, // the port of the listening socket of the servery
+         port: 4334, // the port of the listening socket of the servery
          buildInfo: {
            productName: "Node MEXT Simulator",
            buildNumber: "2",

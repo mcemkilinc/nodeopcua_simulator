@@ -16,34 +16,34 @@ const opcua = require("node-opcua");
 
 let St410ProcessStatus=0;
 let St410KittingJigID="";
-let St410PickKittingSubAssyBuffer0=0;
-let St410PickKittingSubAssyBuffer1=0;
-let St410PickKittingSubAssyBuffer2=0;
-let St410PickKittingSubAssyBuffer3=0;
-let St410PickKittingSubAssyBuffer4=0;
-let St410PickKittingSubAssyBuffer5=0;
-let St410PickKittingSubAssyBuffer6=0;
-let St410PickKittingSubAssyBuffer7=0;
-let St410PickKittingSubAssyBuffer8=0;
-let St410PickKittingSubAssyBuffer9=0;
-let St410PickKittingSubAssyBuffer10=0;
-let St410PickKittingSubAssyBuffer11=0;
-let St410PickKittingSubAssyBuffer12=0;
-let St410PickKittingSubAssyBuffer13=0;
-let St410PickKittingSubAssyBuffer14=0;
-let St410PickKittingSubAssyBuffer15=0;
-let St410PickKittingSubAssyBuffer16=0;
-let St410PickKittingSubAssyBuffer17=0;
-let St410PickKTPB0000=0;
-let St410PickKTPB0001=0;
-let St410PickKTPB0002=0;
-let St410PickKTPB0003=0;
-let St410PickKTPB0004=0;
-let St410PickKTPB0005=0;
-let St410PutKTPB0010=0;
-let St410PutKTPB0011=0;
+let St410PickKittingSubAssyBuffer0=false;
+let St410PickKittingSubAssyBuffer1=false;
+let St410PickKittingSubAssyBuffer2=false;
+let St410PickKittingSubAssyBuffer3=false;
+let St410PickKittingSubAssyBuffer4=false;
+let St410PickKittingSubAssyBuffer5=false;
+let St410PickKittingSubAssyBuffer6=false;
+let St410PickKittingSubAssyBuffer7=false;
+let St410PickKittingSubAssyBuffer8=false;
+let St410PickKittingSubAssyBuffer9=false;
+let St410PickKittingSubAssyBuffer10=false;
+let St410PickKittingSubAssyBuffer11=false;
+let St410PickKittingSubAssyBuffer12=false;
+let St410PickKittingSubAssyBuffer13=false;
+let St410PickKittingSubAssyBuffer14=false;
+let St410PickKittingSubAssyBuffer15=false;
+let St410PickKittingSubAssyBuffer16=false;
+let St410PickKittingSubAssyBuffer17=false;
+let St410PickKTPB0000=false;
+let St410PickKTPB0001=false;
+let St410PickKTPB0002=false;
+let St410PickKTPB0003=false;
+let St410PickKTPB0004=false;
+let St410PickKTPB0005=false;
+let St410PutKTPB0010=false;
+let St410PutKTPB0011=false;
 let St410GearRatio="";
-let St410WorkOrderActive=0;
+let St410WorkOrderActive=false;
 let St410WorkOrderNo="";
 let KTPB0CycleValue=3
 let KTPB2CycleValue=3
@@ -60,42 +60,39 @@ let updatedJigID="";
 
 function resetSimulator(){
     St410ProcessStatus=1;
-    St410KittingJigID="";
-    St410PickKittingSubAssyBuffer0=0;
-    St410PickKittingSubAssyBuffer1=0;
-    St410PickKittingSubAssyBuffer2=0;
-    St410PickKittingSubAssyBuffer3=0;
-    St410PickKittingSubAssyBuffer4=0;
-    St410PickKittingSubAssyBuffer5=0;
-    St410PickKittingSubAssyBuffer6=0;
-    St410PickKittingSubAssyBuffer7=0;
-    St410PickKittingSubAssyBuffer8=0;
-    St410PickKittingSubAssyBuffer9=0;
-    St410PickKittingSubAssyBuffer10=0;
-    St410PickKittingSubAssyBuffer11=0;
-    St410PickKittingSubAssyBuffer12=0;
-    St410PickKittingSubAssyBuffer13=0;
-    St410PickKittingSubAssyBuffer14=0;
-    St410PickKittingSubAssyBuffer15=0;
-    St410PickKittingSubAssyBuffer16=0;
-    St410PickKittingSubAssyBuffer17=0;
-    St410PickKTPB0000=0;
-    St410PickKTPB0001=0;
-    St410PickKTPB0002=0;
-    St410PickKTPB0003=0;
-    St410PickKTPB0004=0;
-    St410PickKTPB0005=0;
-    St410PutKTPB0010=0;
-    St410PutKTPB0011=0;
+    St410PickKittingSubAssyBuffer0=false;
+    St410PickKittingSubAssyBuffer1=false;
+    St410PickKittingSubAssyBuffer2=false;
+    St410PickKittingSubAssyBuffer3=false;
+    St410PickKittingSubAssyBuffer4=false;
+    St410PickKittingSubAssyBuffer5=false;
+    St410PickKittingSubAssyBuffer6=false;
+    St410PickKittingSubAssyBuffer7=false;
+    St410PickKittingSubAssyBuffer8=false;
+    St410PickKittingSubAssyBuffer9=false;
+    St410PickKittingSubAssyBuffer10=false;
+    St410PickKittingSubAssyBuffer11=false;
+    St410PickKittingSubAssyBuffer12=false;
+    St410PickKittingSubAssyBuffer13=false;
+    St410PickKittingSubAssyBuffer14=false;
+    St410PickKittingSubAssyBuffer15=false;
+    St410PickKittingSubAssyBuffer16=false;
+    St410PickKittingSubAssyBuffer17=false;
+    St410PickKTPB0000=false;
+    St410PickKTPB0001=false;
+    St410PickKTPB0002=false;
+    St410PickKTPB0003=false;
+    St410PickKTPB0004=false;
+    St410PickKTPB0005=false;
+    St410PutKTPB0010=false;
+    St410PutKTPB0011=false;
     St410GearRatio="";
-    St410WorkOrderActive=0;
     St410WorkOrderNo="";
     KTPB0CycleBufferNumber=3
     KTPB0CycleValue=2
     KTPB2CycleValue=2
     KTPB3CycleValue=1
     KTPB5CycleValue=1
-
     subAssyCycleId=0;
     simControl=0;
     updatedJigID="";
@@ -113,7 +110,6 @@ function resetJigCycle(){
     KTPB5CycleValue=1
     subAssyCycleId=mathjs.mod(totalKittingCycleNumber,6);
     totalKittingCycleNumber+=1;
-    St410KittingJigID="";
     St410GearRatio="";
     console.log("subAssyCycleId:"+subAssyCycleId);
     console.log("totalKittingCycleNumber:"+totalKittingCycleNumber);
@@ -132,44 +128,114 @@ function construct_my_address_space(server) {
 
     const stationNode  = namespace.addFolder(objectsFolder,{ browseName: "St410Kitting"});
 
-    function runKSB0() {
-        
-        
-        setTimeout(function () {St410PickKittingSubAssyBuffer0=1;}, 3000);}
+    function runKSB0() {setTimeout(function () {
+        St410ProcessStatus = 2;
+        St410PickKittingSubAssyBuffer0=true;
+        St410PickKittingSubAssyBuffer6=true;
+        St410PickKittingSubAssyBuffer12=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0003=true;
+        St410PickKTPB0004=true;
+        St410PickKTPB0005=true;
+        St410PutKTPB0010=true;
+        St410PutKTPB0011=true;
+    }, 5000);
+}
 
-    function runKSB6() {setTimeout(function () {St410PickKittingSubAssyBuffer6=1;}, 3000);}
+    function runKSB6() {setTimeout(function () {St410PickKittingSubAssyBuffer6=true;}, 3000);}
 
-    function runKSB12() {setTimeout(function () {St410PickKittingSubAssyBuffer12=1;}, 3000);}
+    function runKSB12() {setTimeout(function () {St410PickKittingSubAssyBuffer12=true;}, 3000);}
     
-    function runKSB1() {setTimeout(function () {St410PickKittingSubAssyBuffer1=1;}, 3000);}
+    function runKSB1() {setTimeout(function () {
+        St410ProcessStatus = 2;
+        St410PickKittingSubAssyBuffer1=true;
+        St410PickKittingSubAssyBuffer7=true;
+        St410PickKittingSubAssyBuffer13=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0003=true;
+        St410PickKTPB0004=true;
+        St410PickKTPB0005=true;
+        St410PutKTPB0010=true;
+        St410PutKTPB0011=true;
+    }, 5000);}
 
-    function runKSB7() {setTimeout(function () {St410PickKittingSubAssyBuffer7=1;}, 3000);}
+    function runKSB7() {setTimeout(function () {St410PickKittingSubAssyBuffer7=true;}, 3000);}
 
-    function runKSB13() {setTimeout(function () {St410PickKittingSubAssyBuffer13=1;}, 3000);}
+    function runKSB13() {setTimeout(function () {St410PickKittingSubAssyBuffer13=true;}, 3000);}
 
-    function runKSB2() {setTimeout(function () {St410PickKittingSubAssyBuffer2=1;}, 3000);}
+    function runKSB2() {setTimeout(function () {
+        St410ProcessStatus = 2;
+        St410PickKittingSubAssyBuffer2=true;
+        St410PickKittingSubAssyBuffer8=true;
+        St410PickKittingSubAssyBuffer14=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0003=true;
+        St410PickKTPB0004=true;
+        St410PickKTPB0005=true;
+        St410PutKTPB0010=true;
+        St410PutKTPB0011=true;
+    }, 5000);}
 
-    function runKSB8() {setTimeout(function () {St410PickKittingSubAssyBuffer8=1;}, 3000);}
+    function runKSB8() {setTimeout(function () {St410PickKittingSubAssyBuffer8=true;}, 3000);}
 
-    function runKSB14() {setTimeout(function () {St410PickKittingSubAssyBuffer14=1;}, 3000);}
+    function runKSB14() {setTimeout(function () {St410PickKittingSubAssyBuffer14=true;}, 3000);}
 
-    function runKSB3() {setTimeout(function () {St410PickKittingSubAssyBuffer3=1;}, 3000);}
+    function runKSB3() {setTimeout(function () {
+        St410ProcessStatus = 2;
+        St410PickKittingSubAssyBuffer3=true;
+        St410PickKittingSubAssyBuffer9=true;
+        St410PickKittingSubAssyBuffer15=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0003=true;
+        St410PickKTPB0004=true;
+        St410PickKTPB0005=true;
+        St410PutKTPB0010=true;
+        St410PutKTPB0011=true;
+    }, 5000);}
 
-    function runKSB9() {setTimeout(function () {St410PickKittingSubAssyBuffer9=1;}, 3000);}
+    function runKSB9() {setTimeout(function () {St410PickKittingSubAssyBuffer9=true;}, 3000);}
 
-    function runKSB15() {setTimeout(function () {St410PickKittingSubAssyBuffer15=1;}, 3000);}
+    function runKSB15() {setTimeout(function () {St410PickKittingSubAssyBuffer15=true;}, 3000);}
 
-    function runKSB4() {setTimeout(function () {St410PickKittingSubAssyBuffer4=1;}, 3000);}
+    function runKSB4() {setTimeout(function () {
+        St410ProcessStatus = 2;
+        St410PickKittingSubAssyBuffer4=true;
+        St410PickKittingSubAssyBuffer10=true;
+        St410PickKittingSubAssyBuffer16=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0003=true;
+        St410PickKTPB0004=true;
+        St410PickKTPB0005=true;
+        St410PutKTPB0010=true;
+        St410PutKTPB0011=true;
+    }, 5000);}
 
-    function runKSB10() {setTimeout(function () {St410PickKittingSubAssyBuffer10=1;}, 3000);}
+    function runKSB10() {setTimeout(function () {St410PickKittingSubAssyBuffer10=true;}, 3000);}
 
-    function runKSB16() {setTimeout(function () {St410PickKittingSubAssyBuffer16=1;}, 3000);}
+    function runKSB16() {setTimeout(function () {St410PickKittingSubAssyBuffer16=true;}, 3000);}
     
-    function runKSB5() {setTimeout(function () {St410PickKittingSubAssyBuffer5=1;}, 3000);}
+    function runKSB5() {setTimeout(function () {
+        St410ProcessStatus = 2;
+        St410PickKittingSubAssyBuffer5=true;
+        St410PickKittingSubAssyBuffer11=true;
+        St410PickKittingSubAssyBuffer17=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0000=true;
+        St410PickKTPB0003=true;
+        St410PickKTPB0004=true;
+        St410PickKTPB0005=true;
+        St410PutKTPB0010=true;
+        St410PutKTPB0011=true;
+    }, 5000);}
 
-    function runKSB11() {setTimeout(function () {St410PickKittingSubAssyBuffer11=1;}, 3000);}
+    function runKSB11() {setTimeout(function () {St410PickKittingSubAssyBuffer11=true;}, 3000);}
 
-    function runKSB17() {setTimeout(function () {St410PickKittingSubAssyBuffer17=1;}, 3000);}
+    function runKSB17() {setTimeout(function () {St410PickKittingSubAssyBuffer17=true;}, 3000);}
 
             // add a variable named MyVariable1 to the newly created folder "MyDevice"
             let variable1 = 1;
@@ -182,18 +248,17 @@ function construct_my_address_space(server) {
         // declare the city node
         const folderNode = namespace.addFolder(stationNode,{ browseName: "OPC" });
 
-        namespace.addVariable({componentOf: folderNode,browseName:"St410WorkOrderActive",nodeId: `s=St410WorkOrderActive`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St410WorkOrderActive });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410WorkOrderActive",nodeId: `s=St410WorkOrderActive`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410WorkOrderActive });},
         set: function (variant) {
             St410WorkOrderActive = variant.value;
-            getRandomJigID();
             St410ProcessStatus = 1;
             resetJigCycle();
-            if(St410WorkOrderActive==1&&subAssyCycleId==0) runKSB0()      
-            if(St410WorkOrderActive==1&&subAssyCycleId==1) runKSB1()      
-            if(St410WorkOrderActive==1&&subAssyCycleId==2) runKSB2()      
-            if(St410WorkOrderActive==1&&subAssyCycleId==3) runKSB3()      
-            if(St410WorkOrderActive==1&&subAssyCycleId==4) runKSB4()      
-            if(St410WorkOrderActive==1&&subAssyCycleId==5) runKSB5()      
+            if(St410WorkOrderActive&&subAssyCycleId==0) runKSB0()      
+            if(St410WorkOrderActive&&subAssyCycleId==1) runKSB1()      
+            if(St410WorkOrderActive&&subAssyCycleId==2) runKSB2()      
+            if(St410WorkOrderActive&&subAssyCycleId==3) runKSB3()      
+            if(St410WorkOrderActive&&subAssyCycleId==4) runKSB4()      
+            if(St410WorkOrderActive&&subAssyCycleId==5) runKSB5()      
             return opcua.StatusCodes.Good;
         }
     }});
@@ -229,219 +294,159 @@ function construct_my_address_space(server) {
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer0",nodeId: `s=St410PickKittingSubAssyBuffer0`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer0 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer0",nodeId: `s=St410PickKittingSubAssyBuffer0`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer0 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer0 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer0==0) runKSB6()      
+            St410PickKittingSubAssyBuffer0 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer1",nodeId: `s=St410PickKittingSubAssyBuffer1`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer1 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer1",nodeId: `s=St410PickKittingSubAssyBuffer1`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer1 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer1 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer1==0) runKSB7()      
+            St410PickKittingSubAssyBuffer1 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer2",nodeId: `s=St410PickKittingSubAssyBuffer2`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer2 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer2",nodeId: `s=St410PickKittingSubAssyBuffer2`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer2 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer2 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer2==0) runKSB8()      
+            St410PickKittingSubAssyBuffer2 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer3",nodeId: `s=St410PickKittingSubAssyBuffer3`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer3 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer3",nodeId: `s=St410PickKittingSubAssyBuffer3`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer3 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer3 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer3==0) runKSB9()      
+            St410PickKittingSubAssyBuffer3 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer4",nodeId: `s=St410PickKittingSubAssyBuffer4`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer4 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer4",nodeId: `s=St410PickKittingSubAssyBuffer4`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer4 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer4 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer4==0) runKSB10()      
+            St410PickKittingSubAssyBuffer4 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer5",nodeId: `s=St410PickKittingSubAssyBuffer5`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer5 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer5",nodeId: `s=St410PickKittingSubAssyBuffer5`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer5 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer4 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer5==0) runKSB11()      
+            St410PickKittingSubAssyBuffer4 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer6",nodeId: `s=St410PickKittingSubAssyBuffer6`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer6 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer6",nodeId: `s=St410PickKittingSubAssyBuffer6`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer6 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer6 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer6==0) runKSB12()      
+            St410PickKittingSubAssyBuffer6 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer7",nodeId: `s=St410PickKittingSubAssyBuffer7`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer7 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer7",nodeId: `s=St410PickKittingSubAssyBuffer7`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer7 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer7 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer7==0) runKSB13()      
+            St410PickKittingSubAssyBuffer7 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer8",nodeId: `s=St410PickKittingSubAssyBuffer8`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer8 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer8",nodeId: `s=St410PickKittingSubAssyBuffer8`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer8 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer8 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer8==0) runKSB14()      
+            St410PickKittingSubAssyBuffer8 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer9",nodeId: `s=St410PickKittingSubAssyBuffer9`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer9 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer9",nodeId: `s=St410PickKittingSubAssyBuffer9`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer9 });},
         set: function (variant) {
-            St410PickKittingSubAssyBuffer9 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer9==0) runKSB15()      
+            St410PickKittingSubAssyBuffer9 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer10",nodeId: `s=St410PickKittingSubAssyBuffer10`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer10 });},
-    
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer10",nodeId: `s=St410PickKittingSubAssyBuffer10`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer10 });},    
             set: function (variant) {
-            St410PickKittingSubAssyBuffer10 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer10==0) runKSB16()      
+            St410PickKittingSubAssyBuffer10 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer11",nodeId: `s=St410PickKittingSubAssyBuffer11`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer11 });},
-    
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer11",nodeId: `s=St410PickKittingSubAssyBuffer11`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer11 });},    
             set: function (variant) {
-            St410PickKittingSubAssyBuffer11 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer11==0) runKSB17()      
+            St410PickKittingSubAssyBuffer11 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer12",nodeId: `s=St410PickKittingSubAssyBuffer12`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer12 });},
-    
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer12",nodeId: `s=St410PickKittingSubAssyBuffer12`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer12 });},    
             set: function (variant) {
-            St410PickKittingSubAssyBuffer12 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer12==0) St410PickKTPB0000=1;      
+            St410PickKittingSubAssyBuffer12 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer13",nodeId: `s=St410PickKittingSubAssyBuffer13`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer13 });},
-    
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer13",nodeId: `s=St410PickKittingSubAssyBuffer13`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer13 });},    
             set: function (variant) {
-            St410PickKittingSubAssyBuffer13 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer13==0) St410PickKTPB0000=1;     
+            St410PickKittingSubAssyBuffer13 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer14",nodeId: `s=St410PickKittingSubAssyBuffer14`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer14 });},
-    
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer14",nodeId: `s=St410PickKittingSubAssyBuffer14`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer14 });},    
             set: function (variant) {
-            St410PickKittingSubAssyBuffer14 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer14==0) St410PickKTPB0000=1;     
+            St410PickKittingSubAssyBuffer14 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer15",nodeId: `s=St410PickKittingSubAssyBuffer15`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer15 });},
-    
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer15",nodeId: `s=St410PickKittingSubAssyBuffer15`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer15 });},    
             set: function (variant) {
-                St410PickKittingSubAssyBuffer15 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer15==0) St410PickKTPB0000=1;     
+                St410PickKittingSubAssyBuffer15 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer16",nodeId: `s=St410PickKittingSubAssyBuffer16`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer16 });},
-    
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer16",nodeId: `s=St410PickKittingSubAssyBuffer16`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer16 });},    
             set: function (variant) {
-                St410PickKittingSubAssyBuffer16 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer16==0) St410PickKTPB0000=1;      
+                St410PickKittingSubAssyBuffer16 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer17",nodeId: `s=St410PickKittingSubAssyBuffer17`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKittingSubAssyBuffer17 });},
-    
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKittingSubAssyBuffer17",nodeId: `s=St410PickKittingSubAssyBuffer17`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKittingSubAssyBuffer17 });},    
             set: function (variant) {
-                St410PickKittingSubAssyBuffer17 = parseFloat(variant.value);
-            if(St410PickKittingSubAssyBuffer17==0) St410PickKTPB0000=1;      
+                St410PickKittingSubAssyBuffer17 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0000",nodeId: `s=St410PickKTPB0000`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKTPB0000 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0000",nodeId: `s=St410PickKTPB0000`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKTPB0000 });},
                 set: function (variant) {
-                    St410PickKTPB0000 = parseFloat(variant.value);
-            if(St410PickKTPB0000==0&&KTPB0CycleValue>0) 
-            {
-                St410PickKTPB0000=1;
-                KTPB0CycleValue=KTPB0CycleValue-1;
-            } else {
-                St410PickKTPB0001=1;
-            }       
+                    St410PickKTPB0000 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0001",nodeId: `s=St410PickKTPB0001`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKTPB0001 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0001",nodeId: `s=St410PickKTPB0001`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKTPB0001 });},
                 set: function (variant) {
-            St410PickKTPB0001 = parseFloat(variant.value);
-            St410PickKTPB0002=1;
+            St410PickKTPB0001 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0002",nodeId: `s=St410PickKTPB0002`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKTPB0002 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0002",nodeId: `s=St410PickKTPB0002`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKTPB0002 });},
                 set: function (variant) {
-                    St410PickKTPB0002 = parseFloat(variant.value);
-            if(St410PickKTPB0002==0&&KTPB2CycleValue>0) 
-            {
-                St410PickKTPB0002=1;
-                KTPB2CycleValue=KTPB2CycleValue-1;
-            } else {
-                St410PickKTPB0003=1;
-            }
+                    St410PickKTPB0002 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0003",nodeId: `s=St410PickKTPB0003`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKTPB0003 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0003",nodeId: `s=St410PickKTPB0003`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKTPB0003 });},
         set: function (variant) {
-                    St410PickKTPB0003 = parseFloat(variant.value);
-            if(St410PickKTPB0003==0&&KTPB3CycleValue>0) 
-            {
-                St410PickKTPB0003=1;
-                KTPB3CycleValue=KTPB3CycleValue-1;
-            } else {
-                St410PickKTPB0004=1;
-            }
+                    St410PickKTPB0003 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0004",nodeId: `s=St410PickKTPB0004`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKTPB0004 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0004",nodeId: `s=St410PickKTPB0004`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKTPB0004 });},
         set: function (variant) {
-                    St410PickKTPB0004 = parseFloat(variant.value);
-                    St410PickKTPB0005=1;
+                    St410PickKTPB0004 = variant.value;
             return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0005",nodeId: `s=St410PickKTPB0005`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PickKTPB0005 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PickKTPB0005",nodeId: `s=St410PickKTPB0005`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PickKTPB0005 });},
                 set: function (variant) {
-                    St410PickKTPB0005 = parseFloat(variant.value);
-                    if(St410PickKTPB0005==0&&KTPB5CycleValue>0) 
-                    {
-                        St410PickKTPB0005=1;
-                        KTPB5CycleValue=KTPB5CycleValue-1;
-                        console.log(KTPB5CycleValue.toString());
-                    } else {
-                        St410PutKTPB0010=1;
-                    }
+                    St410PickKTPB0005 = variant.value;
                     return opcua.StatusCodes.Good;
         }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PutKTPB0010",nodeId: `s=St410PutKTPB0010`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PutKTPB0010 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PutKTPB0010",nodeId: `s=St410PutKTPB0010`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PutKTPB0010 });},
         set: function (variant) {
-            St410PutKTPB0010 = parseFloat(variant.value);
-            St410PutKTPB0011=1;
+            St410PutKTPB0010 = variant.value;
     return opcua.StatusCodes.Good;
 }
     }});
-        namespace.addVariable({componentOf: folderNode,browseName:"St410PutKTPB0011",nodeId: `s=St410PutKTPB0011`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St410PutKTPB0011 });},
+        namespace.addVariable({componentOf: folderNode,browseName:"St410PutKTPB0011",nodeId: `s=St410PutKTPB0011`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St410PutKTPB0011 });},
         set: function (variant) {
-            St410PutKTPB0011 = parseFloat(variant.value);
-            St410ProcessStatus = 2;
-            St410WorkOrderActive = 0;
+            St410PutKTPB0011 = variant.value;
     return opcua.StatusCodes.Good;
 }
     }});
