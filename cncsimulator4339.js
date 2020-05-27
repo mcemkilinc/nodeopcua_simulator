@@ -82,7 +82,7 @@ let St300RawTransferGear=1;
 let St300TransferShaftCustom=1;
 let St300TransferShaftClassic=1;
 
-
+waitTime = 3000;
 
 
 function resetSimulator(){

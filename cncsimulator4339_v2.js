@@ -39,28 +39,28 @@ let St300ProgramJob7=0;
 let St300ProgramJob8=0;
 let St300ProgramJob9=0;
 let St300ReadProcess=0;
-let St300TransferEngravingLoad=1;
+let St300TransferEngravingLoad=0;
 let St300TransferShaftLoadTray=0;
-let St300UnloadTransferGear=1;
-let St300UnloadTransferSubassy=1;
+let St300UnloadTransferGear=0;
+let St300UnloadTransferSubassy=0;
 let St300WorkOrder="WO1234";
-let St301CAM3Finished=1;
+let St301CAM3Finished=0;
 let St301ClampLeft=0;
-let St301CNCStartProgram3=1;
-let St301DoorClose=1;
-let St301DoorOpen=1;
-let St301InputCAM1=1;
-let St301InputCAM2=1;
+let St301CNCStartProgram3=0;
+let St301DoorClose=0;
+let St301DoorOpen=0;
+let St301InputCAM1=0;
+let St301InputCAM2=0;
 let St301Status=0;
-let St301UnClampLeft=1;
-let St310DoorIsOpen=1;
-let St310IIWAinNode4=1;
-let St310ProcessStatus=1;
-let St310WorkOrderActive=1;
+let St301UnClampLeft=0;
+let St310DoorIsOpen=0;
+let St310IIWAinNode4=0;
+let St310ProcessStatus=0;
+let St310WorkOrderActive=0;
 
 let St310MachineState = 4;
-let St310PartResult =1;
-let St310ProductType = "Standard";
+let St310PartResult =0;
+let St310ProductType = 0;
 let St310WorkOrderNo ="WO1234";
 
 let St320DMCSerialNo="123456";
@@ -69,7 +69,7 @@ let St320IIWAinNode3=0;
 let St320MachineState=4;
 let St320PartResult="1";
 let St320ProcessStatus=0;
-let St320ProductType="st";
+let St320ProductType=0;
 let St320WorkOrderActive=0;
 let St320WorkOrderNo="";
 
@@ -118,6 +118,11 @@ function construct_my_address_space(server) {
     namespace.addVariable({componentOf: folderNode,browseName:'St300UnloadInputSubassy',nodeId: `s=St300UnloadInputSubassy`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300UnloadInputSubassy });},
     set: function (variant) {
         St300UnloadInputSubassy = variant.value;
+        if(St300UnloadInputSubassy==1) {
+        setTimeout(function () {
+        St300UnloadInputSubassy=2;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
@@ -167,18 +172,33 @@ function construct_my_address_space(server) {
     namespace.addVariable({componentOf: folderNode,browseName:'St300LoadInputSubAssyParts',nodeId: `s=St300LoadInputSubAssyParts`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300LoadInputSubAssyParts });},
     set: function (variant) {
         St300LoadInputSubAssyParts = variant.value;
+        if(St300LoadInputSubAssyParts==1) {
+        setTimeout(function () {
+        St300LoadInputSubAssyParts=2;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
     namespace.addVariable({componentOf: folderNode,browseName:'St300LoadJig',nodeId: `s=St300LoadJig`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300LoadJig });},
     set: function (variant) {
         St300LoadJig = variant.value;
+        if(St300LoadJig==1) {
+        setTimeout(function () {
+        St300LoadJig=2;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
     namespace.addVariable({componentOf: folderNode,browseName:'St300LoadTransferSubAssyPart',nodeId: `s=St300LoadTransferSubAssyPart`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300LoadTransferSubAssyPart });},
     set: function (variant) {
         St300LoadTransferSubAssyPart = variant.value;
+        if(St300LoadTransferSubAssyPart==1) {
+        setTimeout(function () {
+        St300LoadTransferSubAssyPart=2;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
@@ -191,7 +211,7 @@ function construct_my_address_space(server) {
     namespace.addVariable({componentOf: folderNode,browseName:'St300MoveNode1',nodeId: `s=St300MoveNode1`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300MoveNode1 });},
     set: function (variant) {
         St300MoveNode1 = variant.value;
-        if(St300MoveNode1=1) {
+        if(St300MoveNode1==1) {
             setTimeout(function () {
                 St300MoveNode1=2
             },waitTime);
@@ -202,9 +222,10 @@ function construct_my_address_space(server) {
     namespace.addVariable({componentOf: folderNode,browseName:'St300MoveNode2',nodeId: `s=St300MoveNode2`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300MoveNode2 });},
     set: function (variant) {
         St300MoveNode2 = variant.value;
-        if(St300MoveNode2=1) {
+        if(St300MoveNode2==1) {
             setTimeout(function () {
                 St300MoveNode2=2;
+                if(St300ProgramJob7==1) St300ProgramJob7=2;
                 St301Status=1;
             },waitTime);
         }
@@ -225,18 +246,35 @@ function construct_my_address_space(server) {
         St300MoveNode3=2;
         },waitTime);
         }
+        if(St300MoveNode3==2&&St300ProgramJob8==1) {
+        setTimeout(function () {
+            St320ProcessStatus=0;
+St320DoorIsOpen=0;
+St320WorkOrderActive=0;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
     namespace.addVariable({componentOf: folderNode,browseName:'St300MoveNode4',nodeId: `s=St300MoveNode4`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300MoveNode4 });},
     set: function (variant) {
         St300MoveNode4 = variant.value;
+        if(St300MoveNode4==1) {
+        setTimeout(function () {
+        St300MoveNode4=2;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
     namespace.addVariable({componentOf: folderNode,browseName:'St300MoveNode5',nodeId: `s=St300MoveNode5`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300MoveNode5 });},
     set: function (variant) {
         St300MoveNode5 = variant.value;
+        if(St300MoveNode5==1) {
+        setTimeout(function () {
+        St300MoveNode5=2;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
@@ -247,9 +285,16 @@ function construct_my_address_space(server) {
         setTimeout(function () {
         St300PickTransferShaft=2;
         },waitTime);
+    }
+        if(St300PickTransferShaft==2) {
+            setTimeout(function () {
+                St320ProcessStatus=0;
+                St320DoorIsOpen=0;
+                St320WorkOrderActive=0;
+                        },waitTime);
         }
         return opcua.StatusCodes.Good;
-    }
+        }
     }});
     namespace.addVariable({componentOf: folderNode,browseName:'St300ProgramJob1',nodeId: `s=St300ProgramJob1`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300ProgramJob1 });},
     set: function (variant) {
@@ -336,6 +381,12 @@ function construct_my_address_space(server) {
     namespace.addVariable({componentOf: folderNode,browseName:'St300ProgramJob8',nodeId: `s=St300ProgramJob8`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300ProgramJob8 });},
     set: function (variant) {
         St300ProgramJob8 = variant.value;
+        if(St300ProgramJob8==1) {
+        setTimeout(function () {
+        St301DoorClose=2;
+        St300ProgramJob8=2;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
@@ -366,6 +417,11 @@ St301DoorClose=2;
     namespace.addVariable({componentOf: folderNode,browseName:'St300TransferEngravingLoad',nodeId: `s=St300TransferEngravingLoad`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300TransferEngravingLoad });},
     set: function (variant) {
         St300TransferEngravingLoad = variant.value;
+        if(St300TransferEngravingLoad==1) {
+        setTimeout(function () {
+        St300TransferEngravingLoad=2;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
@@ -383,12 +439,30 @@ St301DoorClose=2;
     namespace.addVariable({componentOf: folderNode,browseName:'St300UnloadTransferGear',nodeId: `s=St300UnloadTransferGear`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300UnloadTransferGear });},
     set: function (variant) {
         St300UnloadTransferGear = variant.value;
+        if(St300UnloadTransferGear==1) {
+        setTimeout(function () {
+        St300UnloadTransferGear=2;
+        },waitTime);
+        }
+        if(St300UnloadTransferGear==2&&St320WorkOrderActive==1) {
+            setTimeout(function () {
+                St320ProcessStatus=0;
+                St320DoorIsOpen=1;
+                St310PartResult=0; 
+                St320WorkOrderActive=0;
+            },waitTime);
+            }
         return opcua.StatusCodes.Good;
     }
     }});
     namespace.addVariable({componentOf: folderNode,browseName:'St300UnloadTransferSubassy',nodeId: `s=St300UnloadTransferSubassy`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St300UnloadTransferSubassy });},
     set: function (variant) {
         St300UnloadTransferSubassy = variant.value;
+        if(St300UnloadTransferSubassy==1) {
+        setTimeout(function () {
+        St300UnloadTransferSubassy=2;
+        },waitTime);
+        }
         return opcua.StatusCodes.Good;
     }
     }});
@@ -479,18 +553,62 @@ St301DoorClose=2;
     namespace.addVariable({componentOf: folderNode,browseName:'St310IIWAinNode4',nodeId: `s=St310IIWAinNode4`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St310IIWAinNode4 });},
     set: function (variant) {
         St310IIWAinNode4 = variant.value;
+        if(St310IIWAinNode4==1) {
+        setTimeout(function () {
+            St310DoorIsOpen=1;
+                },waitTime);
+        }
+        if(St310IIWAinNode4==0) {
+            setTimeout(function () {
+                St310ProcessStatus=0;
+                St310DoorIsOpen=0;
+                St310PartResult=1;
+                St301CAM3Finished=1;
+                    },waitTime);
+            }
+            if(St310IIWAinNode4==0&&St310ProductType==2) {
+                setTimeout(function () {
+                    St310ProcessStatus=0;
+                    St310DoorIsOpen=0;
+                    St310WorkOrderActive=0;
+                        },waitTime);
+                }
         return opcua.StatusCodes.Good;
     }
     }});
     namespace.addVariable({componentOf: folderNode,browseName:'St310ProcessStatus',nodeId: `s=St310ProcessStatus`,dataType: 'Byte',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St310ProcessStatus });},
     set: function (variant) {
         St310ProcessStatus = variant.value;
+        if(St310ProcessStatus==1) {
+        setTimeout(function () {
+        St310ProcessStatus=2;
+        St310DoorIsOpen=1;
+        St310PartResult=1;
+        },waitTime);
+        }
+        if(St310ProcessStatus==4) {
+            setTimeout(function () {
+            St310ProcessStatus=8;
+            St310DoorIsOpen=1;
+            St310PartResult=1;
+            },waitTime);
+            }
         return opcua.StatusCodes.Good;
     }
     }});
     namespace.addVariable({componentOf: folderNode,browseName:'St310WorkOrderActive',nodeId: `s=St310WorkOrderActive`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St310WorkOrderActive });},
     set: function (variant) {
         St310WorkOrderActive = variant.value;
+        if(St310WorkOrderActive==1&&St310ProductType==1) {
+        setTimeout(function () {
+            St310ProcessStatus=1;
+                    },waitTime);
+        }
+        if(St310WorkOrderActive==1&&St310ProductType==2) {
+            setTimeout(function () {
+                St310ProcessStatus=4;
+                        },waitTime);
+            }
         return opcua.StatusCodes.Good;
     }
     }});
@@ -506,7 +624,7 @@ St301DoorClose=2;
         return opcua.StatusCodes.Good;
     }
     }});
-    namespace.addVariable({componentOf: folderNode,browseName:'St310ProductType',nodeId: `s=St310ProductType`,dataType: 'String',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St310ProductType });},
+    namespace.addVariable({componentOf: folderNode,browseName:'St310ProductType',nodeId: `s=St310ProductType`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St310ProductType });},
     set: function (variant) {
         St310ProductType = variant.value;
         return opcua.StatusCodes.Good;
@@ -576,10 +694,17 @@ St301DoorClose=2;
                     St320PartResult=1;
                 },waitTime);
                 }
+                if(St320ProcessStatus==4) {
+                    setTimeout(function () {
+                        St320ProcessStatus=8;
+                        St320DoorIsOpen=1;
+                        St320PartResult=1;
+                    },waitTime);
+                    }
         return opcua.StatusCodes.Good;
     }
     }});
-    namespace.addVariable({componentOf: folderNode,browseName:'St320ProductType',nodeId: `s=St320ProductType`,dataType: 'String',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St320ProductType });},
+    namespace.addVariable({componentOf: folderNode,browseName:'St320ProductType',nodeId: `s=St320ProductType`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St320ProductType });},
     set: function (variant) {
         St320ProductType = variant.value;
         return opcua.StatusCodes.Good;
@@ -588,9 +713,11 @@ St301DoorClose=2;
     namespace.addVariable({componentOf: folderNode,browseName:'St320WorkOrderActive',nodeId: `s=St320WorkOrderActive`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St320WorkOrderActive });},
     set: function (variant) {
         St320WorkOrderActive = variant.value;
-        if(St320WorkOrderActive==1) {
+        if(St320WorkOrderActive==1&&St320ProductType==4) {
         setTimeout(function () {
         St320ProcessStatus=16;
+        St320DMCSerialNo="DMCSerial134";
+        St320PartResult=1;
         },waitTime);
         }
         if(St320WorkOrderActive==1&&St300ProgramJob7==1) {
@@ -598,6 +725,11 @@ St301DoorClose=2;
             St320ProcessStatus=1;
             },waitTime);
             }
+            if(St320WorkOrderActive==1&&St300ProgramJob8==1) {
+                setTimeout(function () {
+                St320ProcessStatus=4;
+                },waitTime);
+                }
         return opcua.StatusCodes.Good;
     }
     }});
@@ -673,6 +805,7 @@ set: function (variant) {
     St300TransferShaftClassic = variant.value;
     setTimeout(function () {
         St300TransferShaftClassic=99
+        St300CollectParts=2;
     },waitTime);
     return opcua.StatusCodes.Good;
 }

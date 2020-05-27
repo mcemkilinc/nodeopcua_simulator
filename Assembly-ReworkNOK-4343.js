@@ -34,6 +34,8 @@ let St130ProcessStatus=0;
 let St130PartResult=0;
 let LD90JigStatus=1;
 let LD90JigOrder=0;
+let LD90ConveyorStatus=1;
+let LD90ConveyorOrder=0;
 let St130CycleTime=30;
 let St130StartActivity=false;
 let St130EndActivity=false;
@@ -43,22 +45,21 @@ let St120Product_Type = "";
 let St120SerialNumber = "";
 
 // Added variable for exception handling
-let St110Wp2NOKStatus=1;
-let St110Wp3NOKStatus=1;
+let St110Wp2NOKStatus=0;
+let St110Wp3NOKStatus=0;
 let St110WP1_CycleTime=1;
 let St110WP2_CycleTime=1;
 let St110WP3_CycleTime=1;
-let St110SafetyStatus=1;
-let St110StopReason=1;
-let St120StopReason=1;
-let St110StopReasonMES=1;
+let St110SafetyStatus=0;
+let St110StopReason=0;
+let St120StopReason=0;
+let St110StopReasonMES=0;
 let St110ErrorFlag=false;
-let St120ErrorFlag=false;
 let St110ShiftChange=1;
-let St110WP0WorkOrderActive=1;
-let St110WP1WorkOrderActive=1;
-let St110WP2WorkOrderActive=1;
-let St110WP3WorkOrderActive=1;
+let St110WP0WorkOrderActive=0;
+let St110WP1WorkOrderActive=0;
+let St110WP2WorkOrderActive=0;
+let St110WP3WorkOrderActive=0;
 let St110WP0JigID="Jigid0";
 let St110GripperStatus=1;
 let St110Wp0NOKReasonMES=1;
@@ -71,10 +72,10 @@ let St120WP6_CycleTime=1;
 let St120WP7_CycleTime=1;
 let St120SafetyStatus=1;
 let St120StopReasonMES=1;
-let St120WP4WorkOrderActive=1;
-let St120WP5WorkOrderActive=1;
-let St120WP6WorkOrderActive=1;
-let St120WP7WorkOrderActive=1;
+let St120WP4WorkOrderActive=0;
+let St120WP5WorkOrderActive=0;
+let St120WP6WorkOrderActive=0;
+let St120WP7WorkOrderActive=0;
 let St120Wp4NOKReasonMES=1;
 let St120Wp5NOKReasonMES=1;
 let St120Wp6NOKReasonMES=1;
@@ -140,6 +141,19 @@ function construct_my_address_space(server) {
 
     const stationNode  = namespace.addFolder(objectsFolder,{ browseName: "ST120"});
 
+    function runLD90ConveyorRoute20(i) {
+        if (i > 20) {
+            LD90ConveyorStatus=1;
+            return;
+        } 
+        ProcessStep="ConveyorCarrying";
+        setTimeout(function () {
+            LD90ConveyorStatus=i;
+            runLD90ConveyorRoute20(++i);
+    
+        }, 2000);
+    }
+
     function runLD90Jig(i) {
         if (i > 5) {
             St110MachineState=4;
@@ -147,7 +161,6 @@ function construct_my_address_space(server) {
             St110WorkOrder="WO3456";
             LD90JigStatus=1;
             ProcessStep="WP1";
-            runWP1(1);
             return;
         } 
         ProcessStep="JigCarrying";
@@ -195,7 +208,10 @@ function construct_my_address_space(server) {
     }
 
     function runWP1(a) {
-        if (a > 2) return;
+        if (a > 2){
+            St110WP1WorkOrderActive=0;
+            return;
+        }
         St110ProcessStatus=a;
         ProcessStep="WP1";
         St110WP1JigID=updatedJigID;
@@ -204,7 +220,10 @@ function construct_my_address_space(server) {
         },waitTime);
     }
     function runWP2(a) {
-        if (a > 33) return;
+        if (a > 33) {
+            St110WP2WorkOrderActive=0;
+            return;
+        }
         St110ProcessStatus=a;
         ProcessStep="WP2";
         St110WP1JigID="";
@@ -214,7 +233,10 @@ function construct_my_address_space(server) {
         },waitTime);
     }
     function runWP3(a) {
-        if (a > 132) return;
+        if (a > 132) {
+            St110WP3WorkOrderActive=0;
+            return;
+        }
         St110ProcessStatus=a;
         ProcessStep="WP3";
         St110WP2JigID="";
@@ -224,7 +246,10 @@ function construct_my_address_space(server) {
         },waitTime);
     }
     function runWP4(a) {
-        if (a > 2) return;
+        if (a > 2) {
+            St120WP4WorkOrderActive=0;
+            return;
+        }
         St120ProcessStatus=a;        
         ProcessStep="WP4";
         St110WP3JigID="";
@@ -234,7 +259,10 @@ function construct_my_address_space(server) {
         },waitTime);
     }
     function runWP5(a) {
-        if (a > 8) return;
+        if (a > 8){
+            St120WP5WorkOrderActive=0;
+            return;
+        }
         St120ProcessStatus=a;
         ProcessStep="WP5";
         St120WP4JigID="";
@@ -244,8 +272,12 @@ function construct_my_address_space(server) {
         },waitTime);
     }
     function runWP6(a) {
-        if (a > 32) return;
+        if (a > 32){
+            St120WP6WorkOrderActive=0;
+            return;
+        }
         St120ProcessStatus=a;
+        St120Wp6NOKStatus=1;
         ProcessStep="WP6";
         St120WP5JigID="";
         St120WP6JigID=updatedJigID;
@@ -256,10 +288,9 @@ function construct_my_address_space(server) {
     function runWP7(a) {
         if (a > 128) 
         {
-			setTimeout(function () {
-				St130StartActivity=true;
-				runTestOperator2(1);
-			},waitTime);            
+            St120WP7WorkOrderActive=0;
+            St130StartActivity=true;
+            runTestOperator2(1);
             return;
         }
         St120ProcessStatus=a;
@@ -355,9 +386,7 @@ namespace.addVariable({componentOf: folderNode,browseName:"St110ProcessStatus",n
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St110ProcessStatus });},
     set: function (variant) {
         St110ProcessStatus = parseFloat(variant.value);
-        if(St110ProcessStatus==0&&ProcessStep=="WP1") runWP2(4)
-        if(St110ProcessStatus==0&&ProcessStep=="WP2") runWP3(64)
-        if(St110ProcessStatus==0&&ProcessStep=="WP3") runWP4(1)        
+       
         
         return opcua.StatusCodes.Good;
     }
@@ -377,12 +406,6 @@ set: function (variant) {
     return opcua.StatusCodes.Good;
 }
 }});
-namespace.addVariable({componentOf: folderNode,browseName:"St120ErrorFlag",nodeId: `s=St120ErrorFlag`,dataType: "Boolean",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St120ErrorFlag });},
-set: function (variant) {
-    St120ErrorFlag = variant.value;
-    return opcua.StatusCodes.Good;
-}
-}});
 namespace.addVariable({componentOf: folderNode,browseName:"St110WorkOrder",nodeId: `s=St110WorkOrder`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: St110WorkOrder });},
 set: function (variant) {
     St110WorkOrder = variant.value;
@@ -394,9 +417,6 @@ namespace.addVariable({componentOf: folderNode,browseName:"St120ProcessStatus",n
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St120ProcessStatus });},
     set: function (variant) {
         St120ProcessStatus = parseFloat(variant.value);
-        if(St120ProcessStatus==0&&ProcessStep=="WP4") runWP5(4)
-        if(St120ProcessStatus==0&&ProcessStep=="WP5") runWP6(16)
-        if(St120ProcessStatus==0&&ProcessStep=="WP6") runWP7(64)
         return opcua.StatusCodes.Good;
     }
 }});
@@ -407,7 +427,7 @@ namespace.addVariable({componentOf: folderNode,browseName:"St120WP7JigID",nodeId
 namespace.addVariable({componentOf: folderNode,browseName:"St130ProcessStatus",nodeId: `s=St130ProcessStatus`,dataType: "Byte",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St130ProcessStatus });}}});
 namespace.addVariable({componentOf: folderNode,browseName:"St130PartResult",nodeId: `s=St130PartResult`,dataType: "Byte",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Byte, value: St130PartResult });}}});
 namespace.addVariable({componentOf: folderNode,browseName:"St130CycleTime",nodeId: `s=St130CycleTime`,dataType: "Float",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Float, value: St130CycleTime });}}});
-namespace.addVariable({componentOf: folderNode,browseName:"LD90JigStatus",nodeId: `s=LD90JigStatus`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: LD90JigStatus });}, set: function (variant) { LD90JigStatus = variant.value; return opcua.StatusCodes.Good; } }});
+namespace.addVariable({componentOf: folderNode,browseName:"LD90JigStatus",nodeId: `s=LD90JigStatus`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: LD90JigStatus });}}});
 namespace.addVariable({componentOf: folderNode,browseName:"LD90JigOrder",nodeId: `s=LD90JigOrder`,dataType: "Int32",value:{
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: LD90JigOrder });},
     set: function (variant) {
@@ -423,6 +443,22 @@ namespace.addVariable({componentOf: folderNode,browseName:"LD90JigOrder",nodeId:
         };
         if(LD90JigOrder==4) {
             runLD90JigRoute25(16);
+        };
+        return opcua.StatusCodes.Good;
+    }
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"LD90ConveyorStatus",nodeId: `s=LD90ConveyorStatus`,dataType: "Int32",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: LD90ConveyorStatus });},
+set: function (variant) {
+    LD90ConveyorStatus = parseFloat(variant.value);
+    return opcua.StatusCodes.Good;
+}
+}});
+namespace.addVariable({componentOf: folderNode,browseName:"LD90ConveyorOrder",nodeId: `s=LD90ConveyorOrder`,dataType: "Int32",value:{
+    get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: LD90ConveyorOrder });},
+    set: function (variant) {
+        LD90JigOrder = parseFloat(variant.value);
+        if(LD90ConveyorOrder==1) {
+            runLD90ConveyorRoute20(16);
         };
         return opcua.StatusCodes.Good;
     }
@@ -446,16 +482,12 @@ namespace.addVariable({componentOf: folderNode,browseName:"waitTime",nodeId: `s=
 namespace.addVariable({componentOf: folderNode,browseName:"St130StartActivity",nodeId: `s=St130StartActivity`,dataType: "Boolean",value:{
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St130StartActivity });},
     set: function (variant) {
-		St130StartActivity = variant.value;
-		return opcua.StatusCodes.Good;
     }
 }});
 
 namespace.addVariable({componentOf: folderNode,browseName:"St130EndActivity",nodeId: `s=St130EndActivity`,dataType: "Boolean",value:{
     get: function () {return new opcua.Variant({dataType: opcua.DataType.Boolean, value: St130EndActivity });},
     set: function (variant) {
-		St130EndActivity = variant.value;
-		return opcua.StatusCodes.Good;
     }
 }});
 namespace.addVariable({componentOf: folderNode,browseName:"ProcessStep",nodeId: `s=PRocessStep`,dataType: "String",value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.String, value: ProcessStep });}}});
@@ -596,18 +628,33 @@ set: function (variant) {
 namespace.addVariable({componentOf: folderNode,browseName:'St110WP1WorkOrderActive',nodeId: `s=St110WP1WorkOrderActive`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St110WP1WorkOrderActive });},
 set: function (variant) {
     St110WP1WorkOrderActive = variant.value;
+    if(St110WP1WorkOrderActive==1) {
+    setTimeout(function () {
+    runWP1(1);
+    },waitTime);
+    }
     return opcua.StatusCodes.Good;
 }
 }});
 namespace.addVariable({componentOf: folderNode,browseName:'St110WP2WorkOrderActive',nodeId: `s=St110WP2WorkOrderActive`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St110WP2WorkOrderActive });},
 set: function (variant) {
     St110WP2WorkOrderActive = variant.value;
+    if(St110WP2WorkOrderActive==1) {
+    setTimeout(function () {
+        runWP2(4);
+    },waitTime);
+    }
     return opcua.StatusCodes.Good;
 }
 }});
 namespace.addVariable({componentOf: folderNode,browseName:'St110WP3WorkOrderActive',nodeId: `s=St110WP3WorkOrderActive`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St110WP3WorkOrderActive });},
 set: function (variant) {
     St110WP3WorkOrderActive = variant.value;
+    if(St110WP3WorkOrderActive==1||St110WP3WorkOrderActive==2) {
+    setTimeout(function () {
+    runWP3(64);
+    },waitTime);
+    }
     return opcua.StatusCodes.Good;
 }
 }});
@@ -686,24 +733,44 @@ set: function (variant) {
 namespace.addVariable({componentOf: folderNode,browseName:'St120WP4WorkOrderActive',nodeId: `s=St120WP4WorkOrderActive`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St120WP4WorkOrderActive });},
 set: function (variant) {
     St120WP4WorkOrderActive = variant.value;
+    if(St120WP4WorkOrderActive==1||St120WP4WorkOrderActive==2) {
+    setTimeout(function () {
+        runWP4(1);
+    },waitTime);
+    }
     return opcua.StatusCodes.Good;
 }
 }});
 namespace.addVariable({componentOf: folderNode,browseName:'St120WP5WorkOrderActive',nodeId: `s=St120WP5WorkOrderActive`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St120WP5WorkOrderActive });},
 set: function (variant) {
     St120WP5WorkOrderActive = variant.value;
+    if(St120WP5WorkOrderActive==1||St120WP5WorkOrderActive==2) {
+        setTimeout(function () {
+            runWP5(4);
+        },waitTime);
+        }
     return opcua.StatusCodes.Good;
 }
 }});
 namespace.addVariable({componentOf: folderNode,browseName:'St120WP6WorkOrderActive',nodeId: `s=St120WP6WorkOrderActive`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St120WP6WorkOrderActive });},
 set: function (variant) {
     St120WP6WorkOrderActive = variant.value;
+    if(St120WP6WorkOrderActive==1||St120WP6WorkOrderActive==2) {
+        setTimeout(function () {
+            runWP6(16);
+        },waitTime);
+        }
     return opcua.StatusCodes.Good;
 }
 }});
 namespace.addVariable({componentOf: folderNode,browseName:'St120WP7WorkOrderActive',nodeId: `s=St120WP7WorkOrderActive`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St120WP7WorkOrderActive });},
 set: function (variant) {
     St120WP7WorkOrderActive = variant.value;
+    if(St120WP6WorkOrderActive==1) {
+        setTimeout(function () {
+            runWP7(64);
+        },waitTime);
+        }
     return opcua.StatusCodes.Good;
 }
 }});
@@ -733,13 +800,13 @@ set: function (variant) {
 }});
 namespace.addVariable({componentOf: folderNode,browseName:'St120Wp6NOKStatus',nodeId: `s=St120Wp6NOKStatus`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St120Wp6NOKStatus });},
 set: function (variant) {
-    St120Wp6NOKStatus = variant.value;
+    St120Wp6NOKReasonMES = variant.value;
     return opcua.StatusCodes.Good;
 }
 }});
 namespace.addVariable({componentOf: folderNode,browseName:'St120Wp7NOKStatus',nodeId: `s=St120Wp7NOKStatus`,dataType: 'Int32',value:{get: function () {return new opcua.Variant({dataType: opcua.DataType.Int32, value: St120Wp7NOKStatus });},
 set: function (variant) {
-    St120Wp7NOKStatus = variant.value;
+    St120Wp7NOKReasonMES = variant.value;
     return opcua.StatusCodes.Good;
 }
 }});
@@ -757,7 +824,7 @@ function extract_value(dataType) {
     try {
       
       const server = new opcua.OPCUAServer({
-         port: 4334, // the port of the listening socket of the servery
+         port: 4343, // the port of the listening socket of the servery
          buildInfo: {
            productName: "Node MEXT Simulator",
            buildNumber: "2",
